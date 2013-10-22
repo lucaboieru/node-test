@@ -1,19 +1,31 @@
-var expr = require('express');
+var http = require('http');
 var fs = require('fs');
 
-var app = expr();
 var config;
 
-fs.readFile("appconfig.json", "utf8", function (err, data) {
+fs.readFile("app.json", "utf8", function (err, data) {
 	if (err) { return; }
 	
 	config = JSON.parse(data);
 });
 
-app.get("/", function (req, res) {
+var server = http.createServer(function (req, res) {
 	
-	console.log(config);
+	var url = req.url;
+	var route = "";	
 
+	for (var i in config.routes) {
+		console.log(">>>" + config.routes[i]);
+		if (i === url) { route = config.pages[config.routes[i]]; break; } 
+	}
+
+	if (route === "") { route = config.pages.not_found; } 
+
+	res.writeHead(200, "content-type: text/html");
+
+	var file = fs.createReadStream(route.html);
+
+	file.pipe(res);
 });
 
-app.listen(7777);
+server.listen(7777);
