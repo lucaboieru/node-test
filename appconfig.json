@@ -1,0 +1,25 @@
+{
+	"routes": {
+		"/": "index"
+	},
+	"pages": {
+		"index": {
+			"html": "index.html",
+			"css": [
+			
+			],
+			"scripts": [
+
+			]
+		},
+		"not-found": {
+			"html": "fourohfour.html",
+			"css": [
+				
+			],
+			"scripts": [
+
+			]
+		}
+	}
+}
