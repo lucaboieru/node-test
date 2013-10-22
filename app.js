@@ -5,7 +5,9 @@ var app = expr();
 var config;
 
 fs.readFile("appconfig.json", "utf8", function (err, data) {
-	var config = JSON.parse(data);
+	if (err) { return; }
+	
+	config = JSON.parse(data);
 });
 
 app.get("/", function (req, res) {
