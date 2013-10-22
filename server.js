@@ -1,5 +1,14 @@
 var http = require('http');
 var fs = require('fs');
+var express = require('express');
+var path = require('path');
+var app = express();
+
+app.configure(function () {
+    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.bodyParser());
+    app.use(express.logger("short"));
+});
 
 var config;
 
@@ -9,7 +18,7 @@ fs.readFile("app.json", "utf8", function (err, data) {
 	config = JSON.parse(data);
 });
 
-var server = http.createServer(function (req, res) {
+app.use(function (req, res) {
 	
 	var url = req.url;
 	var route = "";	
@@ -28,4 +37,4 @@ var server = http.createServer(function (req, res) {
 	file.pipe(res);
 });
 
-server.listen(7777);
+http.createServer(app).listen(7777);

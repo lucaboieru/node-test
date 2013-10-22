@@ -4,7 +4,7 @@
 	},
 	"pages": {
 		"index": {
-			"html": "index.html",
+			"html": "public/html/index.html",
 			"css": [
 			
 			],
@@ -13,7 +13,7 @@
 			]
 		},
 		"not_found": {
-			"html": "fourohfour.html",
+			"html": "public/html/fourohfour.html",
 			"css": [
 				
 			],
