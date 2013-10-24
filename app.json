@@ -21,7 +21,9 @@
 			"scripts": [
 
 			],
-			"hasParams": true
+			"params": [
+				"age"
+			]
 		},
 		"not_found": {
 			"html": "public/html/fourohfour.html",

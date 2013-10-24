@@ -14,9 +14,8 @@ app.configure(function () {
 for (var route in config.routes) {
 	(function (route) {
 		var path = config.pages[config.routes[route]];
-		console.log(">>>", route);
 		
-		if (!config.pages[config.routes[route]].hasParams) {
+		if (!('params' in config.pages[config.routes[route]])) {
 			app.get(route, function (req, res) {
 				res.writeHead(200, "content-type: text/html");
 
@@ -27,7 +26,8 @@ for (var route in config.routes) {
 			app.get(route + "/:id", function (req, res){
 				res.writeHead(200, "content-type: text/html");
 				
-				console.log('da');
+				var file = fs.createReadStream(path.html);
+                                file.pipe(res);
 			});
 		}
 	})(route);
