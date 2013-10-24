@@ -3,6 +3,7 @@ var fs = require('fs');
 var express = require('express');
 var path = require('path');
 var app = express();
+var config;
 
 app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
@@ -10,8 +11,7 @@ app.configure(function () {
     app.use(express.logger("short"));
 });
 
-var config;
-
+// Reading from configuration file
 fs.readFile("app.json", "utf8", function (err, data) {
 	if (err) { return; }
 	
@@ -24,7 +24,6 @@ app.use(function (req, res) {
 	var route = "";	
 
 	for (var i in config.routes) {
-		console.log(">>>" + config.routes[i]);
 		if (i === url) { route = config.pages[config.routes[i]]; break; } 
 	}
 
