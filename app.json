@@ -1,6 +1,7 @@
 {
 	"routes": {
-		"/": "index"
+		"/": "index",
+		"/aboutus": "aboutus"
 	},
 	"pages": {
 		"index": {
@@ -11,6 +12,16 @@
 			"scripts": [
 
 			]
+		},
+		"aboutus": {
+			"html": "public/html/aboutus.html",
+			"css": [
+		
+			],
+			"scripts": [
+
+			],
+			"hasParams": true
 		},
 		"not_found": {
 			"html": "public/html/fourohfour.html",

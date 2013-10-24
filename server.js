@@ -3,6 +3,7 @@ var fs = require('fs');
 var express = require('express');
 var path = require('path');
 var app = express();
+var config = require("./app.json");
 
 app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
@@ -10,31 +11,33 @@ app.configure(function () {
     app.use(express.logger("short"));
 });
 
-var config;
+for (var route in config.routes) {
+	(function (route) {
+		var path = config.pages[config.routes[route]];
+		console.log(">>>", route);
+		
+		if (!config.pages[config.routes[route]].hasParams) {
+			app.get(route, function (req, res) {
+				res.writeHead(200, "content-type: text/html");
 
-fs.readFile("app.json", "utf8", function (err, data) {
-	if (err) { return; }
-	
-	config = JSON.parse(data);
-});
+				var file = fs.createReadStream(path.html);
+				file.pipe(res);			
+			});
+		} else {
+			app.get(route + "/:id", function (req, res){
+				res.writeHead(200, "content-type: text/html");
+				
+				console.log('da');
+			});
+		}
+	})(route);
+}
 
-app.use(function (req, res) {
-	
-	var url = req.url;
-	var route = "";	
-
-	for (var i in config.routes) {
-		console.log(">>>" + config.routes[i]);
-		if (i === url) { route = config.pages[config.routes[i]]; break; } 
-	}
-
-	if (route === "") { route = config.pages.not_found; } 
-
+app.get("*", function (req, res) {
 	res.writeHead(200, "content-type: text/html");
-
-	var file = fs.createReadStream(route.html);
-
+	
+	var file = fs.createReadStream(config.pages.not_found.html);
 	file.pipe(res);
 });
 
-http.createServer(app).listen(7777);
+app.listen(7777);
