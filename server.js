@@ -23,11 +23,12 @@ for (var route in config.routes) {
 				file.pipe(res);			
 			});
 		} else {
-			app.get(route + "/:id", function (req, res){
+			app.get(route + "/:age/:name", function (req, res){
 				res.writeHead(200, "content-type: text/html");
 				
 				var file = fs.createReadStream(path.html);
-                                file.pipe(res);
+                                //file.pipe(res);
+				res.write(req.params.age + " " + req.params.name);
 			});
 		}
 	})(route);

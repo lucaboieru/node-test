@@ -22,7 +22,8 @@
 
 			],
 			"params": [
-				"age"
+				"age",
+				"name"
 			]
 		},
 		"not_found": {
